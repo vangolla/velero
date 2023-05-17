@@ -6,12 +6,14 @@ To install Velero with an on-premises S3 storage backend in an AKS cluster, you 
 
 3)Configure Velero credentials: Create a Velero credentials file (credentials-velero) with your on-premises S3
 
+```
 [default]
 aws_access_key_id = YOUR_ACCESS_KEY
 aws_secret_access_key = YOUR_SECRET_KEY
+```
 
 Create a Velero configuration file: Create a Velero configuration file (velero-config.yaml) with the following content:
-'''
+```
 apiVersion: velero.io/v1
 kind: Velero
 metadata:
@@ -36,7 +38,7 @@ spec:
       s3Url: your-s3-endpoint-url
       publicUrl: your-s3-endpoint-url
   useVolumeSnapshots: true
-'''
+```
 
 Replace the following placeholders with your own values:
 
@@ -46,10 +48,10 @@ your-bucket-name: The name of the S3 bucket you want to use for storing Velero b
 your-prefix: (Optional) A prefix to be used for the backup objects in the S3 bucket.
 
 5) Install Velero into the AKS cluster: Run the following command to install Velero into the AKS cluster:
-'''
+```
 velero install --provider aws --bucket your-bucket-name --secret-file ./credentials-velero --config ./velero-config.yaml
 
-'''
+```
 This command installs Velero with the AWS provider, specifying your S3 bucket and credentials. It uses the configuration file and the credentials file you created earlier.
 
 
