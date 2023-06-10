@@ -1,0 +1,64 @@
+Create a resource group first
+az group create --name myResourceGroup --location southcentralus
+
+Create Log Analytics workspace
+az monitor log-analytics workspace create --resource-group myResourceGroup
+                                           --workspace-name my-loganalytics-workspace \
+                                           --query id \
+                                           -o tsv)
+((((az monitor log-analytics workspace create --resource-group myResourceGroup --workspace-name my-loganalytics-workspace --query id -o tsv)))))
+
+Output of the above command will display log analytics Id which is needed for next command while creating AKS cluster
+
+Create AKS cluster with 2 worker nodes with Monitoring Enabled
+az aks create --resource-group myResourceGroup --name myAKSCluster --node-count 2 --enable-addons monitoring --workspace-resource-id  (SPACE AND REPLACE THE LOGANYLATICS OUTPUT)/subscriptions/XXXXX/resourceGroups/myResourceGroup/providers/Microsoft.OperationalInsights/workspaces/aks-loganalytics-workspace
+
+#############################
+############################
+Implementation steps
+We need to add the Helm Stable Charts for your local client. Execute the below command:
+
+helm repo add stable https://charts.helm.sh/stable
+
+
+# Add prometheus Helm repo
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+
+# Search for newly installed repositories
+helm repo list
+
+
+helm search repo prometheus-community
+
+Prometheus and grafana helm chart moved to kube prometheus stack
+
+Create Prometheus namespace
+kubectl create namespace prometheus
+
+
+Install kube-prometheus-stack
+Below is helm command to install kube-prometheus-stack. The helm repo kube-stack-prometheus (formerly prometheus-operator) comes with a grafana deployment embedded.
+helm install stable prometheus-community/kube-prometheus-stack -n prometheus
+
+
+Lets check if prometheus and grafana pods are running already
+kubectl get pods -n prometheus
+
+
+
+kubectl get svc -n prometheus
+
+
+
+This confirms that prometheus and grafana services have been created successfully using Helm. To access them, you will need to run the following commands:
+Login to Grafana and Prometheus
+Expose Prometheus
+# Port forward the Prometheus service
+kubectl port-forward -n prometheus prometheus-stable-kube-prometheus-sta-prometheus-0 9090
+
+
+Now Open localhost:9090 in browser to access Prometheus
+
+Expose Grafana
+# Port forward the Grafana service
