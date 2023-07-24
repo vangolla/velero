@@ -1,0 +1,63 @@
+ERROR [restic-builder 3/3] RUN mkdir -p /output/usr/bin &&     export GOARM=$(echo "" | cut  0.5s
+ => CANCELED [velero-builder 4/4] RUN mkdir -p /output/usr/bin &&     export GOARM=$( echo "" |  0.8s
+------
+ > [restic-builder 3/3] RUN mkdir -p /output/usr/bin &&     export GOARM=$(echo "" | cut -c2-) &&     /go/src/github.com/vmware-tanzu/velero/hack/build-restic.sh:
+0.510 /go/src/github.com/vmware-tanzu/velero/hack/build-restic.sh: line 27: BIN: unbound variable
+------
+Dockerfile:64
+--------------------
+  63 |     
+  64 | >>> RUN mkdir -p /output/usr/bin && \
+  65 | >>>     export GOARM=$(echo "${GOARM}" | cut -c2-) && \
+  66 | >>>     /go/src/github.com/vmware-tanzu/velero/hack/build-restic.sh
+  67 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c mkdir -p /output/usr/bin &&     export GOARM=$(echo \"${GOARM}\" | cut -c2-) &&     /go/src/github.com/vmware-tanzu/velero/hack/build-restic.sh" did not complete successfully: exit code: 1
+
+######
+ 30     PKG=pkg \
+ 31     BIN=velero \
+ 59     RESTIC_VERSION=0.15.2 \
+##############
+
+=> CACHED [velero-builder 2/4] WORKDIR /go/src/github.com/vmware-tanzu/velero                                                                                                    0.0s
+ => [velero-builder 3/4] COPY . /go/src/github.com/vmware-tanzu/velero                                                                                                            1.2s
+ => [restic-builder 2/3] COPY . /go/src/github.com/vmware-tanzu/velero                                                                                                            1.1s
+ => ERROR [restic-builder 3/3] RUN mkdir -p /output/usr/bin &&     export GOARM=$(echo "" | cut -c2-) &&     /go/src/github.com/vmware-tanzu/velero/hack/build-restic.sh         12.7s
+ => CANCELED [velero-builder 4/4] RUN mkdir -p /output/usr/bin &&     export GOARM=$( echo "" | cut -c2-) &&     go build -o /output/velero     -ldflags "-X /pkg/buildinfo.Ver  12.7s
+------                                                                                                                                                                                 
+ > [restic-builder 3/3] RUN mkdir -p /output/usr/bin &&     export GOARM=$(echo "" | cut -c2-) &&     /go/src/github.com/vmware-tanzu/velero/hack/build-restic.sh:                     
+#0 0.653 Cloning into '//restic'...                                                                                                                                                    
+#0 12.40 Note: switching to 'be8be3397c2ba4f3ec986998a5af4a5a4c309bc3'.                                                                                                                
+#0 12.40                                                                                                                                                                               
+#0 12.40 You are in 'detached HEAD' state. You can look around, make experimental                                                                                                      
+#0 12.40 changes and commit them, and you can discard any commits you make in this
+#0 12.40 state without impacting any branches by switching back to a branch.
+#0 12.40 
+#0 12.40 If you want to create a new branch to retain commits you create, you may
+#0 12.40 do so (now or later) by using -c with the switch command. Example:
+#0 12.40 
+#0 12.40   git switch -c <new-branch-name>
+#0 12.40 
+#0 12.40 Or undo this operation with:
+#0 12.40 
+#0 12.40   git switch -
+#0 12.40 
+#0 12.40 Turn off this advice by setting config variable advice.detachedHead to false
+#0 12.40 
+#0 12.53 //restic /go
+#0 12.54 error: patch failed: go.mod:25
+#0 12.54 error: go.mod: patch does not apply
+#0 12.54 error: patch failed: go.sum:189
+#0 12.54 error: go.sum: patch does not apply
+------
+Dockerfile:68
+--------------------
+  67 |     
+  68 | >>> RUN mkdir -p /output/usr/bin && \
+  69 | >>>     export GOARM=$(echo "${GOARM}" | cut -c2-) && \
+  70 | >>>     /go/src/github.com/vmware-tanzu/velero/hack/build-restic.sh
+  71 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c mkdir -p /output/usr/bin &&     export GOARM=$(echo \"${GOARM}\" | cut -c2-) &&     /go/src/github.com/vmware-tanzu/velero/hack/build-restic.sh" did not complete successfully: exit code: 1
+
