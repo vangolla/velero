@@ -1,0 +1,32 @@
+Velero without NodeAgent:
+Backup and Restoration:
+Velero can perform backup and restoration of Azure Blob and Azure File Share without PV data.
+Unable to backup and restore managed-csi without NodeAgent.
+Incapable of taking any data backup and performing restoration without NodeAgent.
+Enabling NodeAgent:
+Capabilities:
+
+Enables Velero to backup and restore managed-csi.
+Supports cluster version upgrades, increasing/decreasing node count, and PV data backup.
+Allows backup and restoration of Azure Blob and Azure File Share without PV data for specific storage classes (e.g., Azureblob-nfs, Azurefile-csi-nfs).
+Deployment:
+
+NodeAgent is deployed as a DaemonSet.
+Backup Commands:
+
+For backup: velero backup create.
+To exclude PV during backup: velero create backup --exclude pv --include-cluster-resources=true.
+Restic/Kopia for specific storage classes (Managed-csi, Azureblob-nfs, Azurefile-csi-nfs):
+Capabilities:
+
+Supports cluster version upgrades, increasing/decreasing node count, and PV data backup.
+Backup Commands:
+
+During backup, use the command: velero create backup --default-volumes-to-fs-backup.
+This command is applicable for all mentioned storage classes (Managed-csi, Azureblob-nfs, Azurefile-csi-nfs).
+These points provide an overview of Velero's capabilities with and without NodeAgent, as well as the usage of Restic/Kopia for specific storage classes. The commands provided are examples of how to perform backups with certain configurations.
+
+
+
+
+
